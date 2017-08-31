@@ -14,7 +14,7 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
-  "name": "Bookshelf App",
+  "name": "BookshelfApp",
   "description": "A Bookshelf App to store your favorite books",
   "main": "index.js",
   "repository": {
