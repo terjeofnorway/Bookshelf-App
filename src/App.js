@@ -1,23 +1,62 @@
 import React from 'react'
-// import * as BooksAPI from './BooksAPI'
+import * as BooksAPI from './BooksAPI'
+import {Route} from 'react-router-dom';
 import './styles/App.css'
 
-class BooksApp extends React.Component {
-  state = {
-    /**
-     * TODO: Instead of using this state variable to keep track of which page
-     * we're on, use the URL in the browser's address bar. This will ensure that
-     * users can use the browser's back and forward buttons to navigate between
-     * pages, as well as provide a good URL they can bookmark and share.
-     */
-    showSearchPage: false
-  }
+import Bookshelf from './components/Bookshelf';
 
-  render() {
-    return (
-        <div>App sstart</div>
-    )
-  }
+class BooksApp extends React.Component {
+    state = {
+        books: [],
+    }
+
+    static CURRENTLY_READING = 'currentlyReading';
+    static WANT_TO_READ = 'wantToRead';
+    static READ = 'read';
+
+    componentDidMount() {
+        BooksAPI.getAll().then((books) => {
+            this.setState({books: books});
+        })
+    }
+
+    render() {
+        return (
+            // Add the global list wrapper in which each
+            // Bookshelf component will be added
+            <div className="list-books">
+                <div className="list-books-title">
+                    <h1>MyReads</h1>
+                </div>
+                <div className="list-books-content">
+                    <div>
+
+                        <Route path='/' exact render={() =>
+                            <Bookshelf
+                                books={this.state.books.filter((book) => book.shelf === BooksApp.CURRENTLY_READING)}
+                                bookshelfTitle='Currently Reading'
+                            />}
+                        />
+
+                        <Route path='/' exact render={() =>
+                            <Bookshelf
+                                books={this.state.books.filter((book) => book.shelf === BooksApp.WANT_TO_READ)}
+                                bookshelfTitle='Want to read'
+                            />}
+                        />
+
+                        <Route path='/' exact render={() =>
+                            <Bookshelf
+                                books={this.state.books.filter((book) => book.shelf === BooksApp.READ)}
+                                bookshelfTitle='Read'
+                            />}
+                        />
+
+                    </div>
+                </div>
+            </div>
+        )
+    }
 }
 
 export default BooksApp
