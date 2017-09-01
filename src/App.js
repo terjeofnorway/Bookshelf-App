@@ -26,9 +26,11 @@ class BooksApp extends React.Component {
 
 
     onBookshelfChange(bookID, newShelf){
+        const book = this.state.books.find((book) => book.id === bookID);
+
         //TODO: Refactor for more eligance.
         this.setState((oldState) => {
-            const book = oldState.books.find((book) => book.id === bookID);
+
             const updatedShelf = oldState.books.filter((book) => book.id !== bookID);
 
             book.shelf = newShelf;
@@ -38,7 +40,7 @@ class BooksApp extends React.Component {
             return {books:updatedShelf};
         });
 
-
+        BooksAPI.update(book, newShelf);
     }
 
     render() {
