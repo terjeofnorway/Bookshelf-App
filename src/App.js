@@ -5,13 +5,14 @@ import './styles/App.css'
 
 import Bookshelf from './components/Bookshelf';
 import Book from './components/Book';
+import Search from './components/Search';
 
 class BooksApp extends React.Component {
     state = {
         books: [],
     }
 
-    constructor(props){
+    constructor(props) {
         super(props);
 
         this.onBookshelfChange = this.onBookshelfChange.bind(this);
@@ -25,7 +26,7 @@ class BooksApp extends React.Component {
     }
 
 
-    onBookshelfChange(bookID, newShelf){
+    onBookshelfChange(bookID, newShelf) {
         const book = this.state.books.find((book) => book.id === bookID);
 
         //TODO: Refactor for more eligance.
@@ -37,7 +38,7 @@ class BooksApp extends React.Component {
 
             updatedShelf.push(book);
 
-            return {books:updatedShelf};
+            return {books: updatedShelf};
         });
 
         BooksAPI.update(book, newShelf);
@@ -47,44 +48,46 @@ class BooksApp extends React.Component {
         //TODO: Change bookshelves to a loop from shelf library.
 
         return (
-            // Add the global list wrapper in which each
-            // Bookshelf component will be added
-            <div className="list-books">
-                <div className="list-books-title">
-                    <h1>MyReads</h1>
-                </div>
-                <div className="list-books-content">
-                    <div>
+            <div>
+                <Route path='/search' exact render={() => (
+                    <Search/>
+                )}/>
 
-                        <Route path='/' exact render={() =>
-                            <Bookshelf
-                                books={this.state.books.filter((book) => book.shelf === Book.CURRENTLY_READING)}
-                                bookshelfTitle='Currently Reading'
-                                onBookshelfChange={this.onBookshelfChange}
-                            />}
-                        />
+                <Route path='/' exact render={() => (
+                    <div className="list-books">
+                        <div className="list-books-title">
+                            <h1>MyReads</h1>
+                        </div>
+                        <div className="list-books-content">
+                            <div>
 
-                        <Route path='/' exact render={() =>
-                            <Bookshelf
-                                books={this.state.books.filter((book) => book.shelf === Book.WANT_TO_READ)}
-                                bookshelfTitle='Want to read'
-                                onBookshelfChange={this.onBookshelfChange}
-                            />}
-                        />
+                                <Bookshelf
+                                    books={this.state.books.filter((book) => book.shelf === Book.CURRENTLY_READING)}
+                                    bookshelfTitle='Currently Reading'
+                                    onBookshelfChange={this.onBookshelfChange}
+                                />
 
-                        <Route path='/' exact render={() =>
-                            <Bookshelf
-                                books={this.state.books.filter((book) => book.shelf === Book.READ)}
-                                bookshelfTitle='Read'
-                                onBookshelfChange={this.onBookshelfChange}
-                            />}
-                        />
+                                <Bookshelf
+                                    books={this.state.books.filter((book) => book.shelf === Book.WANT_TO_READ)}
+                                    bookshelfTitle='Want to read'
+                                    onBookshelfChange={this.onBookshelfChange}
+                                />
 
+                                <Bookshelf
+                                    books={this.state.books.filter((book) => book.shelf === Book.READ)}
+                                    bookshelfTitle='Read'
+                                    onBookshelfChange={this.onBookshelfChange}
+                                />
+
+                            </div>
+                        </div>
                     </div>
-                </div>
+                )}/>
+
             </div>
         )
     }
 }
 
-export default BooksApp
+
+export default BooksApp;
