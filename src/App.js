@@ -4,15 +4,13 @@ import {Route} from 'react-router-dom';
 import './styles/App.css'
 
 import Bookshelf from './components/Bookshelf';
+import Book from './components/Book';
 
 class BooksApp extends React.Component {
     state = {
         books: [],
     }
 
-    static CURRENTLY_READING = 'currentlyReading';
-    static WANT_TO_READ = 'wantToRead';
-    static READ = 'read';
 
     componentDidMount() {
         BooksAPI.getAll().then((books) => {
@@ -33,21 +31,21 @@ class BooksApp extends React.Component {
 
                         <Route path='/' exact render={() =>
                             <Bookshelf
-                                books={this.state.books.filter((book) => book.shelf === BooksApp.CURRENTLY_READING)}
+                                books={this.state.books.filter((book) => book.shelf === Book.CURRENTLY_READING)}
                                 bookshelfTitle='Currently Reading'
                             />}
                         />
 
                         <Route path='/' exact render={() =>
                             <Bookshelf
-                                books={this.state.books.filter((book) => book.shelf === BooksApp.WANT_TO_READ)}
+                                books={this.state.books.filter((book) => book.shelf === Book.WANT_TO_READ)}
                                 bookshelfTitle='Want to read'
                             />}
                         />
 
                         <Route path='/' exact render={() =>
                             <Bookshelf
-                                books={this.state.books.filter((book) => book.shelf === BooksApp.READ)}
+                                books={this.state.books.filter((book) => book.shelf === Book.READ)}
                                 bookshelfTitle='Read'
                             />}
                         />
