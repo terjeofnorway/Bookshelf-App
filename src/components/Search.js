@@ -1,21 +1,32 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+import {Link} from 'react-router-dom';
+
 
 
 class Search extends Component {
-    static propTypes = {};
+    static propTypes = {
+        query:PropTypes.string,
+        onUpdateQuery:PropTypes.func.isRequired,
+    };
 
     constructor(props){
         super(props);
+
+        this.onUpdateQuery = this.onUpdateQuery.bind(this);
+    }
+
+    onUpdateQuery(e){
+        this.props.onUpdateQuery(e.target.value);
     }
 
     render() {
         return(
             <div className="search-books">
                 <div className="search-books-bar">
-                    <a className="close-search" onClick={() => this.setState({ showSearchPage: false })}>Close</a>
+                    <Link to='/' className="close-search" >Close</Link>
                     <div className="search-books-input-wrapper">
-                        <input type="text" placeholder="Search by title or author"/>
+                        <input type="text" placeholder="Search by title or author" value={this.props.query} onChange={this.onUpdateQuery}/>
                     </div>
                 </div>
                 <div className="search-books-results">

@@ -10,19 +10,21 @@ import Search from './components/Search';
 class BooksApp extends React.Component {
     state = {
         books: [],
+        query:'',
     }
 
     constructor(props) {
         super(props);
 
         this.onBookshelfChange = this.onBookshelfChange.bind(this);
+        this.onUpdateQuery = this.onUpdateQuery.bind(this);
     }
 
 
     componentDidMount() {
         BooksAPI.getAll().then((books) => {
             this.setState({books: books});
-        })
+        });
     }
 
 
@@ -44,13 +46,21 @@ class BooksApp extends React.Component {
         BooksAPI.update(book, newShelf);
     }
 
+
+    onUpdateQuery(query){
+        this.setState({query});
+    }
+
     render() {
         //TODO: Change bookshelves to a loop from shelf library.
 
         return (
             <div>
                 <Route path='/search' exact render={() => (
-                    <Search/>
+                    <Search
+                        query={this.state.query}
+                        onUpdateQuery={this.onUpdateQuery}
+                    />
                 )}/>
 
                 <Route path='/' exact render={() => (
