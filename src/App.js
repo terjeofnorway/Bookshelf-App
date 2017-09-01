@@ -11,6 +11,12 @@ class BooksApp extends React.Component {
         books: [],
     }
 
+    constructor(props){
+        super(props);
+
+        this.onBookshelfChange = this.onBookshelfChange.bind(this);
+    }
+
 
     componentDidMount() {
         BooksAPI.getAll().then((books) => {
@@ -18,7 +24,26 @@ class BooksApp extends React.Component {
         })
     }
 
+
+    onBookshelfChange(bookID, newShelf){
+        //TODO: Refactor for more eligance.
+        this.setState((oldState) => {
+            const book = oldState.books.find((book) => book.id === bookID);
+            const updatedShelf = oldState.books.filter((book) => book.id !== bookID);
+
+            book.shelf = newShelf;
+
+            updatedShelf.push(book);
+
+            return {books:updatedShelf};
+        });
+
+
+    }
+
     render() {
+        //TODO: Change bookshelves to a loop from shelf library.
+
         return (
             // Add the global list wrapper in which each
             // Bookshelf component will be added
@@ -33,6 +58,7 @@ class BooksApp extends React.Component {
                             <Bookshelf
                                 books={this.state.books.filter((book) => book.shelf === Book.CURRENTLY_READING)}
                                 bookshelfTitle='Currently Reading'
+                                onBookshelfChange={this.onBookshelfChange}
                             />}
                         />
 
@@ -40,6 +66,7 @@ class BooksApp extends React.Component {
                             <Bookshelf
                                 books={this.state.books.filter((book) => book.shelf === Book.WANT_TO_READ)}
                                 bookshelfTitle='Want to read'
+                                onBookshelfChange={this.onBookshelfChange}
                             />}
                         />
 
@@ -47,6 +74,7 @@ class BooksApp extends React.Component {
                             <Bookshelf
                                 books={this.state.books.filter((book) => book.shelf === Book.READ)}
                                 bookshelfTitle='Read'
+                                onBookshelfChange={this.onBookshelfChange}
                             />}
                         />
 
