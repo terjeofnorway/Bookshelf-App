@@ -15,11 +15,6 @@ class Bookshelf extends Component {
         READ: {ID:'read', TITLE:'Read'},
     }
 
-    constructor(props){
-        super(props);
-
-    }
-
     render() {
         const {bookshelfTitle, books, onBookshelfChange} = this.props;
 

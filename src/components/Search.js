@@ -19,7 +19,7 @@ class Search extends Component {
         super(props);
 
         this.waitToUpdateQuery = this.waitToUpdateQuery.bind(this);
-        this.queryWaitTimeout;
+        this.queryWaitTimeout = null;
     }
 
     /**

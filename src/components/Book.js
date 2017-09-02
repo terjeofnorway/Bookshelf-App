@@ -26,7 +26,8 @@ class Book extends Component {
     }
 
     render() {
-        const {id, title, authors, imageLinks} = this.props.book;
+        //TODO: Cleanup in aisle 30-37
+        const {title, authors, imageLinks} = this.props.book;
         const currentShelf = this.props.book.shelf || 'none';
 
 
@@ -52,9 +53,7 @@ class Book extends Component {
                 <div className="book-authors">{authorString}</div>
             </div>
         )
-
     }
-
 }
 
 
