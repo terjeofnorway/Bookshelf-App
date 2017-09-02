@@ -6,10 +6,6 @@ class Book extends Component {
         book:PropTypes.object.isRequired
     };
 
-    /** Static book status **/
-    static CURRENTLY_READING = 'currentlyReading';
-    static WANT_TO_READ = 'wantToRead';
-    static READ = 'read';
 
     constructor(props){
         super(props);
@@ -29,6 +25,7 @@ class Book extends Component {
 
     render() {
         const {id, title, authors, imageLinks} = this.props.book;
+        const shelf = this.props.book.shelf || 'none';
 
 
         const authorString = authors && authors.join(', ');

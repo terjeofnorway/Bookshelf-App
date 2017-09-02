@@ -80,19 +80,19 @@ class BooksApp extends React.Component {
                             <div>
 
                                 <Bookshelf
-                                    books={this.state.books.filter((book) => book.shelf === Book.CURRENTLY_READING)}
+                                    books={this.state.books.filter((book) => book.shelf === Bookshelf.SHELVES.CURRENTLY_READING.ID)}
                                     bookshelfTitle='Currently Reading'
                                     onBookshelfChange={this.onBookshelfChange}
                                 />
 
                                 <Bookshelf
-                                    books={this.state.books.filter((book) => book.shelf === Book.WANT_TO_READ)}
+                                    books={this.state.books.filter((book) => book.shelf === Bookshelf.SHELVES.WANT_TO_READ.ID)}
                                     bookshelfTitle='Want to read'
                                     onBookshelfChange={this.onBookshelfChange}
                                 />
 
                                 <Bookshelf
-                                    books={this.state.books.filter((book) => book.shelf === Book.READ)}
+                                    books={this.state.books.filter((book) => book.shelf === Bookshelf.SHELVES.READ.ID)}
                                     bookshelfTitle='Read'
                                     onBookshelfChange={this.onBookshelfChange}
                                 />
