@@ -70,12 +70,11 @@ class BooksApp extends React.Component {
 
                 this.setState({queriedBooks: mergedBooks});
             })
-            .catch((error) => {});
+            .catch((error) => {
+            });
     }
 
     render() {
-        //TODO: Change bookshelves to a loop from shelf library.
-
         return (
             <div>
                 <Route path='/search' exact render={() => (
@@ -95,30 +94,20 @@ class BooksApp extends React.Component {
                         </div>
                         <div className="list-books-content">
                             <div>
-
-                                <Bookshelf
-                                    books={this.state.books.filter((book) => book.shelf === Bookshelf.SHELVES.CURRENTLY_READING.ID)}
-                                    bookshelfTitle='Currently Reading'
-                                    onBookshelfChange={this.onBookshelfChange}
-                                />
-
-                                <Bookshelf
-                                    books={this.state.books.filter((book) => book.shelf === Bookshelf.SHELVES.WANT_TO_READ.ID)}
-                                    bookshelfTitle='Want to read'
-                                    onBookshelfChange={this.onBookshelfChange}
-                                />
-
-                                <Bookshelf
-                                    books={this.state.books.filter((book) => book.shelf === Bookshelf.SHELVES.READ.ID)}
-                                    bookshelfTitle='Read'
-                                    onBookshelfChange={this.onBookshelfChange}
-                                />
-
+                                {
+                                    Object.keys(Bookshelf.SHELVES).map((shelf) => (
+                                        <Bookshelf
+                                            key={shelf}
+                                            books={this.state.books.filter((book) => book.shelf === Bookshelf.SHELVES[shelf].ID)}
+                                            bookshelfTitle={Bookshelf.SHELVES[shelf].TITLE}
+                                            onBookshelfChange={this.onBookshelfChange}
+                                        />
+                                    ))
+                                }
                             </div>
                         </div>
                     </div>
                 )}/>
-
             </div>
         )
     }
