@@ -1,6 +1,6 @@
 import React from 'react'
 import * as BooksAPI from './BooksAPI'
-import {Route} from 'react-router-dom';
+import {Route, Link} from 'react-router-dom';
 import './styles/App.css'
 
 import Bookshelf from './components/Bookshelf';
@@ -10,6 +10,7 @@ import Search from './components/Search';
 class BooksApp extends React.Component {
     state = {
         books: [],
+        queriedBooks:[],
         query:'',
     }
 
@@ -28,27 +29,31 @@ class BooksApp extends React.Component {
     }
 
 
-    onBookshelfChange(bookID, newShelf) {
-        const book = this.state.books.find((book) => book.id === bookID);
+    onBookshelfChange(newBook, newShelf) {
 
         //TODO: Refactor for more eligance.
+        //TODO: Remove book from search result if any.
         this.setState((oldState) => {
 
-            const updatedShelf = oldState.books.filter((book) => book.id !== bookID);
+            const updatedShelf = oldState.books.filter((book) => book.id !== newBook.id);
 
-            book.shelf = newShelf;
+            newBook.shelf = newShelf;
 
-            updatedShelf.push(book);
+            updatedShelf.push(newBook);
 
             return {books: updatedShelf};
         });
 
-        BooksAPI.update(book, newShelf);
+        BooksAPI.update(newBook, newShelf);
     }
 
 
     onUpdateQuery(query){
         this.setState({query});
+
+        BooksAPI.search(query,5).then((books) => {
+            this.setState({queriedBooks:books});
+        });
     }
 
     render() {
@@ -60,6 +65,8 @@ class BooksApp extends React.Component {
                     <Search
                         query={this.state.query}
                         onUpdateQuery={this.onUpdateQuery}
+                        queriedBooks={this.state.queriedBooks}
+                        onBookshelfChange={this.onBookshelfChange}
                     />
                 )}/>
 
@@ -67,6 +74,7 @@ class BooksApp extends React.Component {
                     <div className="list-books">
                         <div className="list-books-title">
                             <h1>MyReads</h1>
+                        <Link to='/search' className='open-search' />
                         </div>
                         <div className="list-books-content">
                             <div>

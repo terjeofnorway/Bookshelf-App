@@ -24,20 +24,21 @@ class Book extends Component {
      * @return void
      */
     onBookshelfChange(e){
-        this.props.onBookshelfChange(this.props.book.id, e.target.value);
+        this.props.onBookshelfChange(this.props.book, e.target.value);
     }
 
     render() {
         const {id, title, authors, imageLinks} = this.props.book;
-        //const {onBookshelfChange} = this.props;
 
-        const authorString = authors.join(', ');
+
+        const authorString = authors && authors.join(', ');
+        const thumbnail = (imageLinks && imageLinks.thumbnail) || 'https://upload.wikimedia.org/wikipedia/commons/b/b9/No_Cover.jpg';
 
 
         return (
             <div className="book">
                 <div className="book-top">
-                    <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url("${imageLinks.thumbnail}")` }}></div>
+                    <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url("${thumbnail}")` }}></div>
                     <div className="book-shelf-changer">
                         <select onChange={this.onBookshelfChange}>
                             <option value="none" disabled>Move to...</option>
