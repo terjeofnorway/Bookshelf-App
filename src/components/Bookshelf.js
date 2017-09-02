@@ -9,6 +9,12 @@ class Bookshelf extends Component {
         bookshelfTitle:PropTypes.string.isRequired,
     };
 
+    static SHELVES = {
+        CURRENTLY_READING: {ID: 'currentlyReading', TITLE: 'Currently Reading'},
+        WANT_TO_READ: {ID: 'wantToRead', TITLE: 'Want To Read'},
+        READ: {ID:'read', TITLE:'Read'},
+    }
+
     constructor(props){
         super(props);
 
