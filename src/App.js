@@ -9,8 +9,8 @@ import Search from './components/Search';
 class BooksApp extends React.Component {
     state = {
         books: [],
-        queriedBooks:[],
-        query:'',
+        queriedBooks: [],
+        query: '',
     }
 
     constructor(props) {
@@ -47,12 +47,30 @@ class BooksApp extends React.Component {
     }
 
 
-    onUpdateQuery(query){
+    /**
+     * Update the query by calling the search API, merging shelf status
+     * from existing shelved books and adding the result into the queriedBooks key in state.
+     * @param query String The query to search for.
+     */
+    onUpdateQuery(query) {
         this.setState({query});
 
-        BooksAPI.search(query,5).then((books) => {
-            this.setState({queriedBooks:books});
-        });
+        BooksAPI.search(query, 5)
+            .then((searchedBooks) => {
+
+                // Use Array.map to generate an array of books that have their
+                // shelved versions set to the correct shelf status.
+                const mergedBooks = searchedBooks.map((singleSearchedBook) => {
+                    const bookInShelves = this.state.books.find((book) => book.id === singleSearchedBook.id);
+                    if (bookInShelves) {
+                        singleSearchedBook.shelf = bookInShelves.shelf;
+                    }
+                    return singleSearchedBook;
+                });
+
+                this.setState({queriedBooks: mergedBooks});
+            })
+            .catch((error) => {});
     }
 
     render() {
@@ -73,7 +91,7 @@ class BooksApp extends React.Component {
                     <div className="list-books">
                         <div className="list-books-title">
                             <h1>MyReads</h1>
-                        <Link to='/search' className='open-search' />
+                            <Link to='/search' className='open-search'/>
                         </div>
                         <div className="list-books-content">
                             <div>
