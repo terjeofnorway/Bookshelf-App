@@ -47,11 +47,19 @@ body, .app {
 .open-search {
   position: absolute;
   right: 25px;
-  top: 25px;
+  top: 15px;
   background-image:url('../graphics/icons/search.svg');
   background-repeat:no-repeat;
-  width:30px;
-  height:30px;
+  background-size: 30px 30px;
+  background-position:center;
+  width:40px;
+  height:40px;
+  border-radius:20px;
+  background-color: #ffffff;
+  transition:all .2s;
+}
+.open-search:hover {
+  transform: scaleX(1.1) scaleY(1.1);
 }
 .open-search a {
   display: block;
@@ -102,6 +110,10 @@ body, .app {
   background-repeat: no-repeat;
   background-size: 28px;
   font-size: 0;
+  transition:all .2s;
+}
+.close-search:hover {
+  transform:translateX(-10%);
 }
 
 .search-books-results {
