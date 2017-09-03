@@ -19,7 +19,7 @@ class Search extends Component {
         super(props);
 
         this.waitToUpdateQuery = this.waitToUpdateQuery.bind(this);
-        this.queryWaitTimeout = null;
+        this.queryWaitTimeout = null; //Used for delaying actual query until user has at leased paused typing.
     }
 
     /**
@@ -44,7 +44,6 @@ class Search extends Component {
     render() {
         const {queriedBooks, onBookshelfChange} = this.props;
 
-
         return(
             <div className="search-books">
                 <div className="search-books-bar">
@@ -66,7 +65,6 @@ class Search extends Component {
             </div>
         )
     }
-
 }
 
 Search.defaultProps = {};

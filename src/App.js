@@ -45,6 +45,8 @@ class BooksApp extends React.Component {
             const updatedShelf = oldState.books.filter((book) => book.id !== newBook.id);
             // Set correct shelf status
             newBook.shelf = newShelf;
+            // Set a timestamp (Unix Epoch) to help determine if an update indication should be shown in Book.
+            newBook.updateStamp = Date.now();
             // Push book into shelf
             updatedShelf.push(newBook);
             return {books: updatedShelf};

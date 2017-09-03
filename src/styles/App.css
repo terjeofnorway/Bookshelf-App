@@ -178,6 +178,35 @@ body, .app {
   cursor: pointer;
 }
 
+.book-shelf-confirmation {
+  position:absolute;
+  width:100%;
+  height:100%;
+  background-image:url('../graphics/icons/book-shelf.svg');
+  background-repeat:no-repeat;
+  background-size:30% 30%;
+  background-position:center;
+  opacity:0;
+  transition:all .5s;
+}
+
+.book-shelf-confirmation.active {
+  animation-duration: 0.9s;
+  animation-name: showConfirmation;
+  animation-iteration-count: 2;
+  animation-direction: alternate;
+}
+
+@keyframes showConfirmation {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity:1;
+  }
+}
+
 /* book cover */
 
 .book-cover {
