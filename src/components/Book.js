@@ -45,16 +45,16 @@ class Book extends Component {
 
 
     render() {
-        //TODO: Cleanup in aisle 30-37
         const {title, authors, imageLinks} = this.props.book;
         const currentShelf = this.props.book.shelf || 'none';
 
-
+        //Check if author actually exist and join. Expect to get either undefined or Array.
         const authorString = authors && authors.join(', ');
+        //Check if imageLinks exist, or show nocover. Expect to get thumbnail if imageLinks exist.
         const thumbnail = (imageLinks && imageLinks.thumbnail) || nocover;
 
+        //Loop available bookshelves to populate the dropdown list.
         const bookShelves = Object.keys(Bookshelf.SHELVES).map((key) => Bookshelf.SHELVES[key]);
-
 
         return (
             <div className="book">
