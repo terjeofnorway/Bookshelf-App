@@ -7,8 +7,12 @@ class Bookshelf extends Component {
     static propTypes = {
         books:PropTypes.array.isRequired,
         bookshelfTitle:PropTypes.string.isRequired,
+        onBookshelfChange:PropTypes.func.isRequired,
     };
 
+    /** The static SHELVES is used by multiple components. In a larger application
+     * this might be placed in a separate library to avoid dependencies between components.
+     */
     static SHELVES = {
         CURRENTLY_READING: {ID: 'currentlyReading', TITLE: 'Currently Reading'},
         WANT_TO_READ: {ID: 'wantToRead', TITLE: 'Want To Read'},
@@ -17,8 +21,6 @@ class Bookshelf extends Component {
 
     render() {
         const {bookshelfTitle, books, onBookshelfChange} = this.props;
-
-
 
         return(
             <div className="bookshelf">
@@ -29,7 +31,6 @@ class Bookshelf extends Component {
                             key={book.id}
                             book={book}
                             onBookshelfChange={onBookshelfChange} />)}
-
                     </ol>
                 </div>
             </div>
