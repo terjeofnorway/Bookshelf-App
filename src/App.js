@@ -1,6 +1,7 @@
 import React from 'react'
 import * as BooksAPI from './BooksAPI'
 import {Route, Link} from 'react-router-dom';
+
 import './styles/App.css'
 
 import Bookshelf from './components/Bookshelf';
@@ -20,26 +21,32 @@ class BooksApp extends React.Component {
         this.onUpdateQuery = this.onUpdateQuery.bind(this);
     }
 
-
+    /**
+     * Get books from API when the component has mounted.
+     */
     componentDidMount() {
         BooksAPI.getAll().then((books) => {
             this.setState({books: books});
         });
     }
 
-
+    /**
+     * Triggers when the user selects another shelf from each dropdown in a Book instance.
+     * This is also used by the search result listing when the user adds a new book to one
+     * of the shelves.
+     *
+     * @param {object} newBook The entire object for a single book
+     * @param {string} newShelf The ID of the new shelft to insert the book ingp.
+     */
     onBookshelfChange(newBook, newShelf) {
 
-        //TODO: Refactor for more eligance.
-        //TODO: Remove book from search result if any.
         this.setState((oldState) => {
-
+            // Pull book out of shelf
             const updatedShelf = oldState.books.filter((book) => book.id !== newBook.id);
-
+            // Set correct shelf status
             newBook.shelf = newShelf;
-
+            // Push book into shelf
             updatedShelf.push(newBook);
-
             return {books: updatedShelf};
         });
 
@@ -50,7 +57,10 @@ class BooksApp extends React.Component {
     /**
      * Update the query by calling the search API, merging shelf status
      * from existing shelved books and adding the result into the queriedBooks key in state.
-     * @param query String The query to search for.
+     * This is triggered after the user has paused typing for X milliseconds. (Actual delay is
+     * controllet by Search component.)
+     *
+     * @param {string} query The query to search for.
      */
     onUpdateQuery(query) {
         this.setState({query});
